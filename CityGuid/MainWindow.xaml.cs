@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GMap.NET.MapProviders;
+using GMap.NET.WindowsPresentation;
+using GMap.NET;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +14,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.IO;
+using CityGuid.MVVM.View;
 
 namespace CityGuid
 {
@@ -20,9 +24,27 @@ namespace CityGuid
     /// </summary>
     public partial class MainWindow : Window
     {
+        public MapView MapView { get; private set; }
+        public PersonsView PersonsView { get; private set; }
+        public OrganizationsView OrganizationsView { get; private set; }
         public MainWindow()
         {
             InitializeComponent();
+            Person person1 = new Person("1", "1", "1");
+            Person person2 = new Person("2", "2", "2");
+            Person person = new Person("a", "b", "c", DateTime.Now, contacts: new Contacts(), new PersonFinance(), DateTime.Now);
+
+            MapView = new MapView(this);
+            PersonsView = new PersonsView(this);
+            OrganizationsView = new OrganizationsView(this);
+            TabMap.Content = MapView;
+            TabPersons.Content = PersonsView;
+            TabOrganizations.Content = OrganizationsView;
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

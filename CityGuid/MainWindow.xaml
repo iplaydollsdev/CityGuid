@@ -5,8 +5,89 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CityGuid"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="700" Width="1000"
+        WindowStyle="None"
+        FontFamily="Poppins"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <SolidColorBrush x:Key="PrimaryBlueColor" Color="#357EFF"/>
+        <SolidColorBrush x:Key="SecondaryBlueColor" Color="WhiteSmoke"/>
 
+        <SolidColorBrush x:Key="PrimaryTextColor" Color="White"/>
+        <SolidColorBrush x:Key="SecondaryTextColor" Color="LightGray"/>
+
+        <Style x:Key="TabItemStyle" TargetType="TabItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColor}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="FontWeight" Value="ExtraBold"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Grid>
+                            <Border CornerRadius="4"
+                                    Width="100"
+                                    Height="30"
+                                    Background="{TemplateBinding Background}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    Margin="{TemplateBinding Margin}"/>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              SnapsToDevicePixels="True"
+                                              RecognizesAccessKey="True"
+                                              Margin="{TemplateBinding Margin}"
+                                              ContentSource="Header"
+                                              Focusable="False"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource SecondaryBlueColor}"/>
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource PrimaryBlueColor}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="{DynamicResource PrimaryBlueColor}">
+        <Border CornerRadius="10"
+                Background="{DynamicResource PrimaryTextColor}"
+                Padding="30"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+            <TabControl Width="600" Height="450">
+                <TabItem x:Name="TabOrganizations" Header="Organizations" Style="{DynamicResource TabItemStyle}">
+                    <Grid>
+
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="TabPersons" Header="Persons" Style="{DynamicResource TabItemStyle}">
+
+                </TabItem>
+                <TabItem x:Name="TabMap" Header="Map" Style="{DynamicResource TabItemStyle}">
+                    <!--<MapView></MapView>-->
+                </TabItem>
+            </TabControl>
+        </Border>
+        <Button x:Name="CloseButton" Width="50"
+                Height="50"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Margin="10" Click="CloseButton_Click"/>
     </Grid>
+
 </Window>
