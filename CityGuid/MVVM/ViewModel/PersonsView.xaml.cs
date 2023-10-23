@@ -1,6 +1,7 @@
 ﻿using CityGuid.MVVM.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,9 +23,12 @@ namespace CityGuid.MVVM.View
     public partial class PersonsView : UserControl
     {
         public List<Person> Persons { get; private set; } = new();
+        private MainWindow _mainWindow;
         public PersonsView(MainWindow mainWindow)
         {
             InitializeComponent();
+            _mainWindow = mainWindow;
+
             for (int i = 0; i < 10; i++)
             {
                 Persons.Add(MakePerson());
@@ -33,8 +37,17 @@ namespace CityGuid.MVVM.View
             {
                 TextBlock textBlock = new TextBlock();
                 textBlock.Text = person.GetFullName();
+                textBlock.Tag = person;
                 PersonsListBox.Items.Add(textBlock);
             }
+        }
+        public Person? SelectedItem;
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedItem = (TextBlock)PersonsListBox.SelectedItem;
+            SelectedItem = (Person)selectedItem.Tag;
+            Properties.Children.Clear();
+            Properties.Children.Add(SetProperties(SelectedItem));
         }
 
         private Person MakePerson()
@@ -44,6 +57,12 @@ namespace CityGuid.MVVM.View
             PersonFinance personFinance = new PersonFinance();
             Person result = new Person(names[rnd.Next(0, names.Length - 1)], $"{names[rnd.Next(0, names.Length - 1)]}ов", $"{names[rnd.Next(0, names.Length - 1)]}вич",
                                         DateTime.Now.AddYears(-rnd.Next(20, 50)), new Contacts(), personFinance, DateTime.Now.AddDays(-rnd.Next(1, 20)));
+            return result;
+        }
+
+        private PersonPropView SetProperties(Person person)
+        {
+            PersonPropView result = new(person);
 
             return result;
         }

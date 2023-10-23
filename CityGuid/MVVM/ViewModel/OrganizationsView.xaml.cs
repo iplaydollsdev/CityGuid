@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -39,9 +40,19 @@ namespace CityGuid.MVVM.View
             {
                 TextBlock textBlock = new TextBlock();
                 textBlock.Text = organization.Name;
+                textBlock.Tag = organization;
                 OrganizationsListBox.Items.Add(textBlock);
             }
         }
+        public Organization? SelectedItem;
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedItem = (TextBlock)OrganizationsListBox.SelectedItem;
+            SelectedItem = (Organization)selectedItem.Tag;
+            Properties.Children.Clear();
+            Properties.Children.Add(SetProperties(SelectedItem));
+        }
+
 
         private Organization MakeOrganization()
         {
@@ -57,6 +68,12 @@ namespace CityGuid.MVVM.View
             FinanceProfile financeProfile = new($"{rnd.Next(10000000, int.MaxValue)}", $"{rnd.Next(10000000, int.MaxValue)}", $"{rnd.Next(10000000, int.MaxValue)}", 
                                             DateTime.Now.AddMonths(-rnd.Next(20, 100)), $"{rnd.Next(10,100)} activity", organizationFinance);
             Organization result = new Organization(contacts, person, $"{rnd.Next(10, 300)} Бычков", null, financeProfile, DateTime.Now.AddDays(-rnd.Next(1, 20)));
+
+            return result;
+        }
+        private OrganizationPropView SetProperties(Organization organization)
+        {
+            OrganizationPropView result = new(organization);
 
             return result;
         }

@@ -12,7 +12,9 @@
             <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
         <ListBox x:Name="PersonsListBox"
-                 Grid.Column="0"></ListBox>
+                 Grid.Column="0"
+                 SelectionChanged="ListBox_SelectionChanged">            
+        </ListBox>
         <StackPanel x:Name="Properties"
                     Grid.Column="1"
                     Background="White"/>

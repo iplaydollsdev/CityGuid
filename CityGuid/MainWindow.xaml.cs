@@ -34,12 +34,12 @@ namespace CityGuid
             Person person2 = new Person("2", "2", "2");
             Person person = new Person("a", "b", "c", DateTime.Now, contacts: new Contacts(), new PersonFinance(), DateTime.Now);
 
-            MapView = new MapView(this);
             PersonsView = new PersonsView(this);
             OrganizationsView = new OrganizationsView(this);
-            TabMap.Content = MapView;
+            MapView = new MapView(this);
             TabPersons.Content = PersonsView;
             TabOrganizations.Content = OrganizationsView;
+            TabMap.Content = MapView;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

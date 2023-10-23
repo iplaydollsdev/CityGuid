@@ -11,7 +11,8 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="OrganizationsListBox"></ListBox>
+        <ListBox x:Name="OrganizationsListBox"
+                 SelectionChanged="ListBox_SelectionChanged"></ListBox>
         <StackPanel x:Name="Properties"
                     Grid.Column="1"
                     Background="White"/>

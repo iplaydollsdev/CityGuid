@@ -16,17 +16,22 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.ComponentModel;
 
 namespace CityGuid.MVVM.View
 {
     /// <summary>
     /// Interaction logic for MapView.xaml
     /// </summary>
-    public partial class MapView : UserControl
+    public partial class MapView : UserControl, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private MainWindow _mainWindow;
+
         public MapView(MainWindow mainWindow)
         {
             InitializeComponent();
+            _mainWindow = mainWindow;
 
             string pathToMap = System.IO.Path.GetFullPath(@"Files\GMap.NET");
             gmap.MapProvider = GMapProviders.OpenStreetMap;
@@ -39,6 +44,11 @@ namespace CityGuid.MVVM.View
             gmap.MinZoom = 15;
             gmap.MaxZoom = 17;
             gmap.Zoom = 15;
+
+            foreach(var organization in _mainWindow.OrganizationsView.Organizations)
+            {
+                gmap.Markers.Add(new GMapMarker(new PointLatLng(organization.MapLink.Y, organization.MapLink.X)));
+            }
         }
     }
 }
