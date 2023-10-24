@@ -82,7 +82,7 @@ namespace CityGuid.MVVM.View
         }
         private void OnAddressesClick(object sender, MouseButtonEventArgs e)
         {
-            Details contactsWindow = new Details(Organization.Address);
+            Details contactsWindow = new Details(Organization.Address, isAddress: true);
             contactsWindow.Show();
         }
 

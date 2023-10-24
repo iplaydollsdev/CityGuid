@@ -19,42 +19,27 @@
                       Background="White"
                       Height="410">
             <StackPanel x:Name="MainStackPanel" Background="White">
-                <Label Content="Название"/>
+                <Label Content="Имя"/>
                 <TextBlock
                     Style="{DynamicResource TextBlockStyle}"
-                    Text="{Binding OrgName}"/>
-                <Label Content="Руководитель"/>
-                <!--<TextBlock Text="{Binding HeadManager}"
-                           HorizontalAlignment="Center"
-                           MouseUp="HeadManagerMouseUp">
-                    <TextBlock.Foreground>
-                        <SolidColorBrush Color="Blue"/>
-                    </TextBlock.Foreground>
-                    <TextBlock.TextDecorations>
-                        <TextDecorationCollection>
-                            <TextDecoration Location="Underline"/>
-                        </TextDecorationCollection>
-                    </TextBlock.TextDecorations>
-                </TextBlock>-->
+                    Text="{Binding FirstName}"/>
+                <Label x:Name="LastNameLabel" Content="Фамилия"/>
+                <TextBlock
+                    Style="{DynamicResource TextBlockStyle}"
+                    Text="{Binding LastName[0]}"/>
+                <Label Content="Отчество"/>
+                <TextBlock
+                    Style="{DynamicResource TextBlockStyle}"
+                    Text="{Binding MiddleName}"/>
+                <Label Content="Дата Рождения"/>
+                <TextBlock
+                    Style="{DynamicResource TextBlockStyle}"
+                    Text="{Binding Birthday}"/>
                 <Label x:Name="ContactsLabel" Content="Контакты"/>
                 <ListBox x:Name="ContactsListBox" IsEnabled="False"/>
-                <Label x:Name="AddressLabel" Content="Адрес"/>
-                <TextBlock 
-                    Style="{DynamicResource TextBlockStyle}"
-                    Text="{Binding Address}"/>
-                <!--<TextBlock Text="Показать на карте"
-                           HorizontalAlignment="Center"
-                           MouseUp="MapLinkMouseUp">
-                    <TextBlock.Foreground>
-                        <SolidColorBrush Color="Blue"/>
-                    </TextBlock.Foreground>
-                    <TextBlock.TextDecorations>
-                        <TextDecorationCollection>
-                            <TextDecoration Location="Underline"/>
-                        </TextDecorationCollection>
-                    </TextBlock.TextDecorations>
-                </TextBlock>-->
-                <Label Content="Финансы"/>
+                <Label Content="Родственники"/>
+                <ListBox x:Name="RelativesListBox"/>
+                <Label Content="Доходы по годам"/>
                 <ListBox x:Name="FinanceListBox" IsEnabled="False"/>
                 <Label Content="Дата актуальности"/>
                 <TextBlock

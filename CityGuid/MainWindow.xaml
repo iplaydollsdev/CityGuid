@@ -74,19 +74,23 @@
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center">
             <TabControl x:Name="MainTabControl" Width="600" Height="450">
-                <TabItem x:Name="TabOrganizations" Header="Organizations" Style="{DynamicResource TabItemStyle}">
+                <TabItem x:Name="TabOrganizations" Header="Организации" Style="{DynamicResource TabItemStyle}">
                     <Grid>
 
                     </Grid>
                 </TabItem>
-                <TabItem x:Name="TabPersons" Header="Persons" Style="{DynamicResource TabItemStyle}">
+                <TabItem x:Name="TabPersons" Header="Люди" Style="{DynamicResource TabItemStyle}">
 
                 </TabItem>
-                <TabItem x:Name="TabMap" Header="Map" Style="{DynamicResource TabItemStyle}">
+                <TabItem x:Name="TabMap" Header="Карта" Style="{DynamicResource TabItemStyle}">
                 </TabItem>
             </TabControl>
         </Border>
-        <Button x:Name="CloseButton" Width="50"
+        <Button 
+            Content="X"
+            FontSize="30"
+            Background="IndianRed"
+            x:Name="CloseButton" Width="50"
                 Height="50"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"

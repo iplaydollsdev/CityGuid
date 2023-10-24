@@ -26,22 +26,30 @@ namespace CityGuid.MVVM.View
             InitializeComponent();
             FillContacts(contacts);
         }
-        public Details(List<string> addresses)
+        public Details(List<string> strings, bool isAddress)
         {
             InitializeComponent();
-            FillAddresses(addresses);
+            if (isAddress == true)
+            {
+                FillStrings(strings, "Актуальный адрес:", "Старый адрес:");
+            }
+            else
+            {
+                FillStrings(strings, "Текущая фамилия:", "Девичья фамилия:");
+            }
+
         }
 
-        private void FillAddresses(List<string> addresses)
+        private void FillStrings(List<string> strings, string oldValue, string newValue)
         {
-            addresses.Reverse();
+            strings.Reverse();
             bool first = true;
-            foreach (var address in addresses)
+            foreach (var address in strings)
             {
                 TextBlock textBlock = new();
                 textBlock.Text = address;
                 Label label = new();
-                label.Content = first ? "Актуальный адрес:" : "Старый адрес:";
+                label.Content = first ? newValue : oldValue;
                 first = false;
                 DetailsStackPanel.Children.Add(label);
                 DetailsStackPanel.Children.Add(textBlock);

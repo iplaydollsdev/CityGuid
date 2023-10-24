@@ -28,6 +28,8 @@ namespace CityGuid.MVVM.View
         private MainWindow _mainWindow;
         private Label _label;
 
+        public delegate void MouseClickEventHandler(CustomMarker sender);
+        public event MouseClickEventHandler? MarkerMouseClick;
         public MapView(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -70,7 +72,7 @@ namespace CityGuid.MVVM.View
 
         private void OnMouseClick(CustomMarker sender)
         {
-            MessageBox.Show(sender.Organization.Name);
+            MarkerMouseClick?.Invoke(sender);
         }
 
         private void OnMouseLeave(CustomMarker sender)
@@ -94,7 +96,6 @@ namespace CityGuid.MVVM.View
                 gmap.Position = position.Position;
                 gmap.Zoom = gmap.MaxZoom;
             }
-
         }
     }
 }

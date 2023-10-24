@@ -23,22 +23,29 @@ namespace CityGuid.MVVM.View
     public partial class PersonsView : UserControl
     {
         public List<Person> Persons { get; private set; } = new();
-        private MainWindow _mainWindow;
+        private Person? _selectedItem;
         public PersonsView(MainWindow mainWindow)
         {
             InitializeComponent();
-            _mainWindow = mainWindow;
-
-            for (int i = 0; i < 10; i++)
+            //* Наполнение
+            Random random = new Random();
+            for (int i = 0; i < random.Next(6, 20); i++)
             {
                 Persons.Add(MakePerson());
             }
+            //*
+            //* Пример со сменой фамилии
+            Persons.Add(MakeJanna());
+            //*
             foreach (Person person in Persons)
             {
+                //* Наполнение
+                if (random.Next(0, 2) == 1) 
+                    person.Relatives.Add(Persons.Where(p => p != person).ToList()[random.Next(0, Persons.Count - 1)]);
+                //*
                 AddTextBlock(person);
             }
         }
-        private Person? _selectedItem;
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItem = (TextBlock)PersonsListBox.SelectedItem;
@@ -50,16 +57,67 @@ namespace CityGuid.MVVM.View
         private Person MakePerson()
         {
             string[] names = { "Владимир", "Максим", "Виктор", "Константин", "Иван", "Данил", "Александр" };
-            Random rnd = new Random();
+            Random random = new Random();
+            string randomName = names[random.Next(0, names.Length - 1)];
+
             PersonFinance personFinance = new PersonFinance();
-            Person result = new Person(names[rnd.Next(0, names.Length - 1)], $"{names[rnd.Next(0, names.Length - 1)]}ов", $"{names[rnd.Next(0, names.Length - 1)]}ович",
-                                        DateTime.Now.AddYears(-rnd.Next(20, 50)), new Contacts(), personFinance, DateTime.Now.AddDays(-rnd.Next(1, 20)));
+            for (int i = 0; i < random.Next(1, 6); i++)
+            {
+                personFinance.YearIncome.Add($"{2023-i}", $"{random.Next(1000, 1000000)}");
+            }
+
+            Contacts contacts = new Contacts()
+            {
+                Email = $"{randomName}{random.Next(10, 20)}@gmail.com",
+                PhoneNumber = $"+7-{random.Next(100, 900)}-{random.Next(100, 900)}-{random.Next(1000, 2000)}",
+            };
+            Contacts newContacts = new Contacts()
+            {
+                Email = $"{random.Next(10, 20)}org@gmail.com",
+                WebSiteLink = $"{randomName}{random.Next(0, 100)}.com"
+            };
+
+            Person result = new Person(randomName, $"{names[random.Next(0, names.Length - 1)]}ов", $"{names[random.Next(0, names.Length - 1)]}ович",
+                                        DateTime.Now.AddYears(-random.Next(20, 50)), contacts, personFinance, DateTime.Now.AddDays(-random.Next(1, 20)));
+
+            if (random.Next(0, 2) == 1) result.Contacts.Add(newContacts);
+
             return result;
         }
+        private Person MakeJanna()
+        {
+            Random random = new Random();
+
+            PersonFinance personFinance = new PersonFinance();
+            for (int i = 0; i < random.Next(1, 6); i++)
+            {
+                personFinance.YearIncome.Add($"{2023 - i}", $"{random.Next(1000, 1000000)}");
+            }
+
+            Contacts contacts = new Contacts()
+            {
+                Email = $"janna@gmail.com",
+                PhoneNumber = $"+7-{random.Next(100, 900)}-{random.Next(100, 900)}-{random.Next(1000, 2000)}",
+            };
+            Contacts newContacts = new Contacts()
+            {
+                Email = $"janna_org@gmail.com",
+                WebSiteLink = $"jannaportfolio.com",
+                PhoneNumber = $"+7-{random.Next(100, 900)}-{random.Next(100, 900)}-{random.Next(1000, 2000)}"
+            };
+
+            Person result = new Person("Жанна", "Малевич", "Казимировна",
+                                        DateTime.Now.AddYears(-random.Next(20, 50)), contacts, personFinance, DateTime.Now.AddDays(-random.Next(1, 20)));
+
+            result.LastName.Add("Репина");
+            return result;
+        }
+
 
         private PersonPropView SetProperties(Person person)
         {
             PersonPropView result = new(person);
+            result.RelativeMouseClick += SelectPerson;
 
             return result;
         }

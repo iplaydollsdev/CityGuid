@@ -30,9 +30,6 @@ namespace CityGuid
         public MainWindow()
         {
             InitializeComponent();
-            Person person1 = new Person("1", "1", "1");
-            Person person2 = new Person("2", "2", "2");
-            Person person = new Person("a", "b", "c", DateTime.Now, contacts: new Contacts(), new PersonFinance(), DateTime.Now);
 
             PersonsView = new PersonsView(this);
             OrganizationsView = new OrganizationsView(this);
@@ -40,6 +37,13 @@ namespace CityGuid
             TabPersons.Content = PersonsView;
             TabOrganizations.Content = OrganizationsView;
             TabMap.Content = MapView;
+            MapView.MarkerMouseClick += OnMarkerClick;
+        }
+
+        private void OnMarkerClick(CustomMarker sender)
+        {
+            MainTabControl.SelectedIndex = 0;
+            OrganizationsView.SelectOrganization(sender.Organization);
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

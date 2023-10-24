@@ -1,4 +1,5 @@
-﻿using CityGuid.MVVM.Model.SubClasses;
+﻿using CityGuid.MVVM.Model;
+using CityGuid.MVVM.Model.SubClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,18 +33,56 @@ namespace CityGuid.MVVM.View
         
         private Person Person { get; }
 
+        public delegate void MouseClickEventHandler(string sender);
+        public event MouseClickEventHandler? RelativeMouseClick;
         public PersonPropView(Person person)
         {
             InitializeComponent();
             Person = person;
             FirstName = person.FirstName;
             LastName = person.LastName;
+            if (person.LastName.Count > 1)
+            {
+                LastNameLabel.Content = "Фамилии *";
+                LastNameLabel.Foreground = Brushes.Blue;
+                LastNameLabel.MouseUp += OnLastNameClick;
+            }
             MiddleName = person.MiddleName;
-            Birthday = person.Birthday.ToString("dd/M/YYYY");
+            Birthday = person.Birthday.ToString("dd/M/yyyy");
 
-            RelevanceDate = person.RelevanceDate.ToString("dd/M/YYYY");
+            FillContacts(person);
+            FillFinance(person);
+            FillRelatives(person);
+            RelevanceDate = person.RelevanceDate.ToString("dd/M/yyyy");
             DataContext = this;
         }
+
+
+        private void FillFinance(Person person)
+        {
+            if (person.Finance == null)
+                return;
+
+            foreach (var yearIncome in person.Finance.YearIncome)
+            {
+                string income = $"{yearIncome.Key} - {yearIncome.Value}";
+                Label item = new() { Content = income };
+                FinanceListBox.Items.Add(item);
+            }
+        }
+        private void FillRelatives(Person person)
+        {
+            foreach (var relative in person.Relatives)
+            {
+                string name = $"{relative.GetFullName()}";
+                Label item = new() { Content = name };
+                item.Foreground = Brushes.Blue;
+                item.MouseUp += (sender, e) => RelativeMouseClick?.Invoke(name);
+                RelativesListBox.Items.Add(item);
+            }
+        }
+
+
 
         private void FillContacts(Person person)
         {
@@ -69,6 +108,11 @@ namespace CityGuid.MVVM.View
         private void OnContactsClick(object sender, MouseButtonEventArgs e)
         {
             Details contactsWindow = new Details(Person.Contacts);
+            contactsWindow.Show();
+        }
+        private void OnLastNameClick(object sender, MouseButtonEventArgs e)
+        {
+            Details contactsWindow = new Details(Person.LastName, isAddress: false);
             contactsWindow.Show();
         }
     }

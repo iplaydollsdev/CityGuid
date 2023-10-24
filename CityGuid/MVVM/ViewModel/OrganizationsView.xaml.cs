@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CityGuid.MVVM.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -32,7 +33,8 @@ namespace CityGuid.MVVM.View
             InitializeComponent();
             _mainWindow = mainWindow;
 
-            for (int i = 0; i < 10; i++)
+            Random random = new Random();
+            for (int i = 0; i < random.Next(10, 20); i++)
             {
                 Organizations.Add(MakeOrganization());
             }
@@ -134,5 +136,14 @@ namespace CityGuid.MVVM.View
             textBlock.Tag = organization;
             OrganizationsListBox.Items.Add(textBlock);
         }
+
+        public void SelectOrganization(Organization organization)
+        {
+            _selectedItem = Organizations.Where(o => o == organization).FirstOrDefault();
+            Properties.Children.Clear();
+            if (_selectedItem != null)
+                Properties.Children.Add(SetProperties(_selectedItem));
+        }
+
     }
 }
