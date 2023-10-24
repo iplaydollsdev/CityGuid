@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:CityGuid.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="500">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -13,9 +14,9 @@
         </Grid.ColumnDefinitions>
         <ListBox x:Name="OrganizationsListBox"
                  SelectionChanged="ListBox_SelectionChanged"></ListBox>
+
         <StackPanel x:Name="Properties"
-                    Grid.Column="1"
-                    Background="White"/>
+                    Grid.Column="1"/>
     </Grid>
             
 </UserControl>

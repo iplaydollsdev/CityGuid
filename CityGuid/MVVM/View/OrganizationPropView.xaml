@@ -5,44 +5,62 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CityGuid.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="500" d:DesignWidth="500">
+    <UserControl.Resources>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-        <StackPanel x:Name="MainStackPanel" Background="White">
-            <Label Content="Название"/>
-            <TextBlock
-                Background="LightGray"
-                HorizontalAlignment="Center"
-                Text="{Binding Name}"/>
-            <Label Content="Руководитель"/>
-            <TextBlock 
-                Background="LightGray"
-                HorizontalAlignment="Center"
-                Text="{Binding HeadManager}"/>
-            <Label Content="Контакты"/>
-            <TextBlock
-                Background="LightGray"
-                HorizontalAlignment="Center"
-                Text="{Binding Contacts}"/>
-            <Label Content="Адрес"/>
-            <TextBlock 
-                Background="LightGray"
-                HorizontalAlignment="Center"
-                Text="{Binding Address}"/>
-            <Label Content="Ссылка на карте"/>
-            <TextBlock
-                Background="LightGray"
-                HorizontalAlignment="Center"
-                Text="{Binding MapLink}"/>
-            <Label Content="Финансы"/>
-            <TextBlock
-                Background="LightGray"
-                HorizontalAlignment="Center"
-                Text="{Binding Finance}"/>
-            <Label Content="Дата актуальности"/>
-            <TextBlock
-                Background="LightGray"
-                HorizontalAlignment="Center"
-                Text="{Binding RelevanceDate}"/>
-        </StackPanel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      CanContentScroll="True"
+                      Background="White"
+                      Height="410">
+            <StackPanel x:Name="MainStackPanel" Background="White">
+                <Label Content="Название"/>
+                <TextBlock
+                    Style="{DynamicResource TextBlockStyle}"
+                    Text="{Binding OrgName}"/>
+                <Label Content="Руководитель"/>
+                <TextBlock Text="{Binding HeadManager}"
+                           HorizontalAlignment="Center"
+                           MouseUp="HeadManagerMouseUp">
+                    <TextBlock.Foreground>
+                        <SolidColorBrush Color="Blue"/>
+                    </TextBlock.Foreground>
+                    <TextBlock.TextDecorations>
+                        <TextDecorationCollection>
+                            <TextDecoration Location="Underline"/>
+                        </TextDecorationCollection>
+                    </TextBlock.TextDecorations>
+                </TextBlock>
+                <Label x:Name="ContactsLabel" Content="Контакты"/>
+                <ListBox x:Name="ContactsListBox" IsEnabled="False"/>
+                <Label x:Name="AddressLabel" Content="Адрес"/>
+                <TextBlock 
+                    Style="{DynamicResource TextBlockStyle}"
+                    Text="{Binding Address}"/>
+                <TextBlock Text="Показать на карте"
+                           HorizontalAlignment="Center"
+                           MouseUp="MapLinkMouseUp">
+                    <TextBlock.Foreground>
+                        <SolidColorBrush Color="Blue"/>
+                    </TextBlock.Foreground>
+                    <TextBlock.TextDecorations>
+                        <TextDecorationCollection>
+                            <TextDecoration Location="Underline"/>
+                        </TextDecorationCollection>
+                    </TextBlock.TextDecorations>
+                </TextBlock>
+                <Label Content="Финансы"/>
+                <ListBox x:Name="FinanceListBox" IsEnabled="False"/>
+                <Label Content="Дата актуальности"/>
+                <TextBlock
+                    Style="{DynamicResource TextBlockStyle}"
+                    Text="{Binding RelevanceDate}"/>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

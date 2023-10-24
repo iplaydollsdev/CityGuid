@@ -38,44 +38,101 @@ namespace CityGuid.MVVM.View
             }
             foreach (Organization organization in Organizations)
             {
-                TextBlock textBlock = new TextBlock();
-                textBlock.Text = organization.Name;
-                textBlock.Tag = organization;
-                OrganizationsListBox.Items.Add(textBlock);
+                AddTextBlock(organization);
             }
         }
-        public Organization? SelectedItem;
+        private Organization? _selectedItem;
+
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItem = (TextBlock)OrganizationsListBox.SelectedItem;
-            SelectedItem = (Organization)selectedItem.Tag;
+            _selectedItem = (Organization)selectedItem.Tag;
             Properties.Children.Clear();
-            Properties.Children.Add(SetProperties(SelectedItem));
+            Properties.Children.Add(SetProperties(_selectedItem));
         }
-
 
         private Organization MakeOrganization()
         {
-            Random rnd = new Random();
+            Random random = new Random();
+
+            //Контакты
             Contacts contacts = new Contacts()
             {
-                Email = $"{rnd.Next(10, 20)}org@gmail.com",
-                PhoneNumber = $"+7-{rnd.Next(100,900)}-{rnd.Next(100, 900)}-{rnd.Next(1000, 2000)}",
-                WebSiteLink = $"{rnd.Next(10, 20)}org.com"
+                Email = $"{random.Next(10, 20)}org@gmail.com",
+                PhoneNumber = $"+7-{random.Next(100,900)}-{random.Next(100, 900)}-{random.Next(1000, 2000)}",
+                WebSiteLink = $"{random.Next(10, 20)}org.com"
             };
-            Person person = _mainWindow.PersonsView.Persons[rnd.Next(0, _mainWindow.PersonsView.Persons.Count - 1)];
-            OrganizationFinance organizationFinance = new OrganizationFinance();
-            FinanceProfile financeProfile = new($"{rnd.Next(10000000, int.MaxValue)}", $"{rnd.Next(10000000, int.MaxValue)}", $"{rnd.Next(10000000, int.MaxValue)}", 
-                                            DateTime.Now.AddMonths(-rnd.Next(20, 100)), $"{rnd.Next(10,100)} activity", organizationFinance);
-            Organization result = new Organization(contacts, person, $"{rnd.Next(10, 300)} Бычков", null, financeProfile, DateTime.Now.AddDays(-rnd.Next(1, 20)));
+            Contacts newContacts = new Contacts()
+            {
+                Email = $"{random.Next(10, 20)}org@gmail.com",
+                WebSiteLink = $"{random.Next(10, 20)}org.com"
+            };
+            //Случайный человек
+            Person person = _mainWindow.PersonsView.Persons[random.Next(0, _mainWindow.PersonsView.Persons.Count - 1)];
+
+            //Финансы организации
+            OrganizationFinance organizationFinance = new();
+
+            //Финансовый профиль
+            FinanceProfile financeProfile = new($"{random.Next(10000000, int.MaxValue)}", $"{random.Next(10000000, int.MaxValue)}", $"{random.Next(10000000, int.MaxValue)}", 
+                                            DateTime.Now.AddMonths(-random.Next(20, 100)), $"{random.Next(10,100)}-я деятельность", organizationFinance);
+
+            //Организация
+            Organization result = new(contacts, person, $"{random.Next(10, 300)} Бычков", $"г.Киров, ул. Свободы {random.Next(1,9)} Собрания, д. {random.Next(10, 100)}", 
+                                                    financeProfile, DateTime.Now.AddDays(-random.Next(1, 20)));
+
+            //Судебные дела
+            for (int i = 0; i < random.Next(0, 4); i++)
+            {
+                if (random.Next(0, 2) == 1)
+                    continue;
+                string claimant = random.Next(0, 2) == 1 ? result.Name : $"{random.Next(10, 300)} Пони";
+                CourtCase courtCase = new(claimant, $"{random.Next(10000, 1000000)}", $"{random.Next(10000, 1000000)}", DateTime.Now.AddMonths(-random.Next(2, 40)));
+                result.FinanceProfile.CourtCases.Add(courtCase);
+            }
+
+            //Госзакупки
+            for (int i = 0;i < random.Next(0, 10); i++)
+            {
+                if (random.Next(0, 2) == 1)
+                    continue;
+                int count = random.Next(100, 6000);
+                GovProcurement govProcurement = new(DateTime.Now.AddMonths(-random.Next(2, 40)), $"Закупка {count} кг. мяса", $"{count * 400}");
+                result.FinanceProfile.GovProcurements.Add(govProcurement);
+            }
+
+            //Случайные элементы
+            if (random.Next(0, 2) == 1) result.Address.Insert(0, $"г.Киров, ул. Ленина, д. {random.Next(10, 100)}");
+            if (random.Next(0, 2) == 1) result.Contacts.Add(newContacts);
 
             return result;
         }
         private OrganizationPropView SetProperties(Organization organization)
         {
             OrganizationPropView result = new(organization);
-
+            result.HeadManagerMouseClickEvent += HeadManagerMouseClick;
+            result.MapLinkClickEvent += MapLinkMouseClick;
             return result;
+        }
+
+        private void MapLinkMouseClick(MapLink sender)
+        {
+            _mainWindow.MainTabControl.SelectedIndex = 2;
+            _mainWindow.MapView.CenterOnMarker(sender);
+        }
+
+        private void HeadManagerMouseClick(string sender)
+        {
+            _mainWindow.MainTabControl.SelectedIndex = 1;
+            _mainWindow.PersonsView.SelectPerson(sender);
+        }
+
+        private void AddTextBlock(Organization organization)
+        {
+            TextBlock textBlock = new TextBlock();
+            textBlock.Text = organization.Name;
+            textBlock.Tag = organization;
+            OrganizationsListBox.Items.Add(textBlock);
         }
     }
 }

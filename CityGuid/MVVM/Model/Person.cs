@@ -8,30 +8,30 @@ namespace CityGuid.MVVM.Model
 {
     public class Person
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string MiddleName { get; set; }
-        public DateTime Birthday { get; set; }
-        public Contacts? Contacts { get; set; }
-        public List<Person> Relatives { get; set; } = new();
-        public PersonFinance? Finance { get; set; }
+        public string FirstName { get; private set; }
+        public List<string> LastName { get; private set; } = new();
+        public string MiddleName { get; private set; }
+        public DateTime Birthday { get; private set; }
+        public List<Contacts> Contacts { get; private set; } = new();
+        public List<Person> Relatives { get; private set; } = new();
+        public PersonFinance? Finance { get; private set; }
         public DateTime RelevanceDate { get; private set; }
 
         public Person(string firstName, string lastName, string middleName)
         {
             FirstName = firstName;
-            LastName = lastName;
+            LastName.Add(lastName);
             MiddleName = middleName;
         }
         public Person(string firstName, string lastName, string middleName, 
-                      DateTime birthday, Contacts? contacts, PersonFinance finance,
+                      DateTime birthday, Contacts contacts, PersonFinance finance,
                       DateTime relevanceDate, params Person[] people)
         {
             FirstName = firstName;
-            LastName = lastName;
+            LastName.Add(lastName);
             MiddleName = middleName;
             Birthday = birthday;
-            Contacts = contacts;
+            Contacts.Add(contacts);
             Finance = finance;
             RelevanceDate = relevanceDate;
             foreach (Person person in people)
@@ -42,7 +42,7 @@ namespace CityGuid.MVVM.Model
         
         public string GetFullName()
         {
-            return $"{LastName} {FirstName} {MiddleName}";
+            return $"{LastName.Last()} {FirstName} {MiddleName}";
         }
     }
 }

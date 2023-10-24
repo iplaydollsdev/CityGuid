@@ -62,6 +62,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
     </Window.Resources>
     <Grid Background="{DynamicResource PrimaryBlueColor}">
         <Border CornerRadius="10"
@@ -69,7 +73,7 @@
                 Padding="30"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center">
-            <TabControl Width="600" Height="450">
+            <TabControl x:Name="MainTabControl" Width="600" Height="450">
                 <TabItem x:Name="TabOrganizations" Header="Organizations" Style="{DynamicResource TabItemStyle}">
                     <Grid>
 
@@ -79,7 +83,6 @@
 
                 </TabItem>
                 <TabItem x:Name="TabMap" Header="Map" Style="{DynamicResource TabItemStyle}">
-                    <!--<MapView></MapView>-->
                 </TabItem>
             </TabControl>
         </Border>
