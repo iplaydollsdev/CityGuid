@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls.DataVisualization;
 
 namespace CityGuid.MVVM.Model.SubClasses
 {
@@ -14,5 +15,11 @@ namespace CityGuid.MVVM.Model.SubClasses
         public List<KeyValuePair<string, int>> Expenses { get; private set; } = new();
         public List<KeyValuePair<string, int>> Profit { get; private set; } = new();
         public uint NumberOfEmployees { get; private set; }
+
+        public OrganizationFinance(uint debts, uint authorizedCapital)
+        {
+            Debts = debts;
+            AuthorizedCapital = authorizedCapital;
+        }
     }
 }

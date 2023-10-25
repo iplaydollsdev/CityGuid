@@ -73,7 +73,7 @@
                 Padding="30"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center">
-            <TabControl x:Name="MainTabControl" Width="800" Height="600">
+            <TabControl x:Name="MainTabControl" Width="600" Height="450">
                 <TabItem x:Name="TabOrganizations" Header="Организации" Style="{DynamicResource TabItemStyle}">
                     <Grid>
 

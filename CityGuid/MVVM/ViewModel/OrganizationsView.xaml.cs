@@ -73,7 +73,7 @@ namespace CityGuid.MVVM.View
             Person person = _mainWindow.PersonsView.Persons[random.Next(0, _mainWindow.PersonsView.Persons.Count - 1)];
 
             //Финансы организации
-            OrganizationFinance organizationFinance = new(); 
+            OrganizationFinance organizationFinance = new((uint)random.Next(0, 20000), 10000); 
             for (int i = 2019; i <= 2023; i++)
             {
                 KeyValuePair<string, int> revenue = new KeyValuePair<string, int>(i.ToString(), random.Next(5000, 200000));

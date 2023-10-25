@@ -104,9 +104,9 @@ namespace CityGuid.MVVM.View
 
             FinanceProfile.Add($"Долги: {orgFinance.Debts}");
             FinanceProfile.Add($"Уставный капитал: {orgFinance.AuthorizedCapital}");
-            FinanceProfile.Add($"Доход: {orgFinance.Revenue}");
-            FinanceProfile.Add($"Расходы: {orgFinance.Expenses}");
-            FinanceProfile.Add($"Прибыль: {orgFinance.Profit}");
+            FinanceProfile.Add($"Доход: {orgFinance.Revenue.Last().Value}");
+            FinanceProfile.Add($"Расходы: {orgFinance.Expenses.Last().Value}");
+            FinanceProfile.Add($"Прибыль: {orgFinance.Profit.Last().Value}");
             FinanceProfile.Add($"Количество сотрудников: {orgFinance.NumberOfEmployees}");
 
 
