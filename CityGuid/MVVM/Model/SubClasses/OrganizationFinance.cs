@@ -10,9 +10,9 @@ namespace CityGuid.MVVM.Model.SubClasses
     {
         public uint Debts { get; private set; }
         public uint AuthorizedCapital { get; private set; }
-        public uint Revenue { get; private set; }
-        public uint Expenses { get; private set; }
-        public uint Profit { get; private set; }
+        public List<KeyValuePair<string, int>> Revenue { get; private set; } = new();
+        public List<KeyValuePair<string, int>> Expenses { get; private set; } = new();
+        public List<KeyValuePair<string, int>> Profit { get; private set; } = new();
         public uint NumberOfEmployees { get; private set; }
     }
 }

@@ -8,8 +8,8 @@
              d:DesignHeight="500" d:DesignWidth="500">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="6*"/>
         </Grid.ColumnDefinitions>
         <ListBox x:Name="PersonsListBox"
                  Grid.Column="0"

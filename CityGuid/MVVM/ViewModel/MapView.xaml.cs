@@ -66,11 +66,18 @@ namespace CityGuid.MVVM.View
                 gmap.Markers.Add(marker);
                 marker.MouseEnterEvent += OnMouseEnter;
                 marker.MouseLeaveEvent += OnMouseLeave;
-                marker.MouseClickEvent += OnMouseClick;
+                marker.MouseLeftClickEvent += OnMouseLeftClick;
+                marker.MouseRightClickEvent += OnMouseRightClick;
             }
         }
 
-        private void OnMouseClick(CustomMarker sender)
+        private void OnMouseRightClick(CustomMarker sender)
+        {
+            Charts chart = new(sender.Organization.FinanceProfile.OrganizationFinance);
+            chart.Show();
+        }
+
+        private void OnMouseLeftClick(CustomMarker sender)
         {
             MarkerMouseClick?.Invoke(sender);
         }

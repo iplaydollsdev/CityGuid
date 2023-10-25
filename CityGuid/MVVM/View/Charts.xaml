@@ -1,0 +1,36 @@
+﻿<Window x:Class="CityGuid.MVVM.View.Charts"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dvc="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=DotNetProjects.DataVisualization.Toolkit"
+        xmlns:local="clr-namespace:CityGuid.MVVM.View"
+        mc:Ignorable="d"
+        Title="Charts" Height="500" Width="500"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel x:Name="MainStackPanel">
+            <dvc:Chart Name="RevenueChart">
+                <dvc:Chart.Axes>
+                    <dvc:CategoryAxis Orientation="X" Title="Год"/>
+                    <dvc:LinearAxis Orientation="Y" />
+                </dvc:Chart.Axes>
+                <dvc:LineSeries Name="RevenueSeries" Title="Доходы" DependentValuePath="Value" IndependentValuePath="Key" />
+            </dvc:Chart>
+            <dvc:Chart Name="ExpensesChart">
+                <dvc:Chart.Axes>
+                    <dvc:CategoryAxis Orientation="X" Title="Год" />
+                    <dvc:LinearAxis Orientation="Y" />
+                </dvc:Chart.Axes>
+                <dvc:LineSeries Name="ExpensesSeries" Title="Расходы" DependentValuePath="Value" IndependentValuePath="Key" Foreground="Red"/>
+            </dvc:Chart>
+            <dvc:Chart Name="ProfitChart">
+                <dvc:Chart.Axes>
+                    <dvc:CategoryAxis Orientation="X" Title="Год" />
+                    <dvc:LinearAxis Orientation="Y" />
+                </dvc:Chart.Axes>
+                <dvc:LineSeries Name="ProfitSeries" Title="Выручка" DependentValuePath="Value" IndependentValuePath="Key" />
+            </dvc:Chart>
+        </StackPanel>
+    </Grid>
+</Window>

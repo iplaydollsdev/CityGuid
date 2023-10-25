@@ -22,18 +22,23 @@ namespace CityGuid.Core
         public delegate void MouseLeaveEventHandler(CustomMarker sender);
         public event MouseEnterEventHandler? MouseLeaveEvent;
 
-        public delegate void MouseClickEventHandler(CustomMarker sender);
-        public event MouseClickEventHandler? MouseClickEvent;
+        public delegate void MouseLeftClickEventHandler(CustomMarker sender);
+        public event MouseLeftClickEventHandler? MouseLeftClickEvent;
+
+        public delegate void MouseRightClickEventHandler(CustomMarker sender);
+        public event MouseRightClickEventHandler? MouseRightClickEvent;
 
         public CustomMarker(PointLatLng pos, Organization organization, UIElement shape) : base(pos)
         {
             Organization = organization;
             MarkerShape = shape;
             Shape = shape;
-            MarkerShape.MouseLeftButtonUp += MarkerClick;
+            MarkerShape.MouseLeftButtonUp += MarkerLeftClick;
+            MarkerShape.MouseRightButtonUp += MarkerRightClick;
             MarkerShape.MouseEnter += MarkerMouseEnter;
             MarkerShape.MouseLeave += MarkerMouseLeave;
         }
+
 
         private void MarkerMouseLeave(object sender, MouseEventArgs e)
         {
@@ -45,9 +50,13 @@ namespace CityGuid.Core
             MouseEnterEvent?.Invoke(this);
         }
 
-        private void MarkerClick(object sender, MouseButtonEventArgs e)
+        private void MarkerLeftClick(object sender, MouseButtonEventArgs e)
         {
-            MouseClickEvent?.Invoke(this);
+            MouseLeftClickEvent?.Invoke(this);
+        }
+        private void MarkerRightClick(object sender, MouseButtonEventArgs e)
+        {
+            MouseRightClickEvent?.Invoke(this);
         }
     }
 }
